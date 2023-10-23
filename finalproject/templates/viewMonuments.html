@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Ticketless Entry System</title>
+    </head>
+    <body align="center">
+        <p align="center">॥ श्री गणेशाय नमः ॥</p>
+        <hr>
+        <h1 align="center">Ticketless Entry System</h1>
+        <hr>
+
+        <table border="2px" align="center">
+            <tr>
+                <th>City</th>
+                <th>Monument</th>
+                <th>Indian Price</th>
+                <th>Foreigner Price</th>
+            </tr>
+            {% for monuments in monumentsData %}
+            <tr>
+                <td>{{monuments.city}}</td>
+                <td>{{monuments.monument}}</td>
+                <td>{{monuments.indPrice}}</td>
+                <td>{{monuments.foreignPrice}}</td>
+            </tr>
+            {% endfor %}
+        </table>
+        <br><br><br>
+        <button><a href="addMonuments">Add Monument</a></button>
+    <body>
+</html>

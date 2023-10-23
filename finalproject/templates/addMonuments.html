@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Ticketless Entry System</title>
+    </head>
+    <body align="center">
+        <p align="center">॥ श्री गणेशाय नमः ॥</p>
+        <hr>
+        <h1 align="center">Ticketless Entry System</h1>
+        <hr>
+            <form method="post" action="/addMonuments">
+                {% csrf_token %}
+                <lable>City : </label>
+                    <input type="text" name="city"/><br><br>
+                    <label>Monument Name : </label>
+                    <input type="text" name="monument"><br><br>
+                    <label>Ticket Price for Indian : <label>
+                    <input type="text" name="indprice"/><br><br>
+                    <label>Ticket Price for Foreigner : <label>
+                    <input type="text" name="foreignprice"/><br><br>
+                    <input type="submit"/>
+                    {% if message %}
+                <script>
+                    document.alert({message})
+                </script>
+            <script>
+                document.alert("Error!! Something Wrong!!")
+            </script>
+            {% endif %}
+            </form>
+            
+            
+    <body>
+</html>

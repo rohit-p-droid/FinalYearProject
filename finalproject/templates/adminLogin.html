@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Ticketless Entry System</title>
+    </head>
+    <body align="center">
+        <p align="center">॥ श्री गणेशाय नमः ॥</p>
+        <hr>
+        <h1 align="center">Ticketless Entry System</h1>
+        <hr>
+        <form method="post" action="/adminLogin">
+            {% csrf_token %}
+                <lable>Email/Username : </label>
+                <input type="text" name="username"/><br><br>
+                <label>Password : </label>
+                <input type="text" name="password"/><br><br>
+                <input type="submit"/>
+        </form>
+    <body>
+</html>
