@@ -9,5 +9,27 @@
         <h1 align="center">Ticketless Entry System</h1>
         <hr>
         
+        <form method="POST" action="/getMonument">
+            {% csrf_token %}
+            <select name="monument">
+                {% for monuments in monumentsData %}
+                        <option>{{monuments.city}}</option>
+                {% endfor %}
+            </select>
+            <input type="submit"/>
+        </form>
+
+        <form method="POST" action="/booking">
+            {% csrf_token %}
+            <select name="mon">
+            {% for monument in cityMonuments %}
+                <option>{{monument.monument}}</option>
+            {% endfor %}
+            </select>
+            <br><br>
+            <input type="submit"/>
+        </form>
+
+
     <body>
 </html>

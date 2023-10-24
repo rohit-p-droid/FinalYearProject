@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Ticketless Entry System</title>
+    </head>
+    <body align="center">
+        <p align="center">॥ श्री गणेशाय नमः ॥</p>
+        <hr>
+        <h1 align="center">Ticketless Entry System</h1>
+        <hr>
+        
+        <h1>Select Monument</h1>
+        {% for monuments in cityMonuments%}
+            <input type='radio' name='monument' value={{monuments.monument}}/>
+            <label>{{monuments.monument}}</label><br>
+        {% endfor %}
+
+    <body>
+</html>

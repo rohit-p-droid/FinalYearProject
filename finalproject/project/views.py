@@ -43,8 +43,58 @@ def viewMonuments(request):
     return render(request, 'viewMonuments.html', data)
 
 def bookTicket(request):
-    return render(request, 'bookTicket.html')
+    monumentsData = Monuments.objects.all()
+    data = {
+        'monumentsData' :monumentsData
+    }
+    return render(request, 'bookTicket.html', data)
 
+def getMonument(request):
+    if request.method == "POST":
+        city = request.POST.get("monument")
+    cityMonuments = Monuments.objects.filter(city=city).values()
+    #  mydata = Member.objects.filter(firstname='Emil').values()
+    data = {
+        'cityMonuments' :cityMonuments
+    }
+
+    return render(request, 'bookTicket.html', data)
+
+def selectCity(request):
+    monumentsData = Monuments.objects.all()
+    data = {
+        'monumentsData' :monumentsData
+    }
+    # if request.method == "POST":
+    #     city = request.POST.get('city')
+    #     cityMonuments = Monuments.objects.filter(city='chopda').values()
+    #     data = {
+    #         cityMonuments: 'cityMonuments'
+    #     }
+    #     return render(request, 'selectMonument.html', data)
+
+    return render(request, 'selectCity.html', data)
+
+def selectMonument(request):
+    if request.method == "POST":
+        city = request.POST.get("city")
+       
+    cityMonuments = Monuments.objects.filter(city=city).values()
+    data = {
+        'cityMonuments' :cityMonuments
+    }
+
+    return render(request, 'selectMonument.html', data) 
+
+
+def booking(request):
+    if request.method == "POST":
+        monument = request.POST.get("mon")
+    infoMonuments = Monuments.objects.filter(monument=monument).values()
+    data = {
+        'infoMonuments' :infoMonuments
+    }
+    return render(request, 'booking.html', data)
 
 
 

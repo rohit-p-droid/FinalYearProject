@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Ticketless Entry System</title>
+    </head>
+    <body align="center">
+        <p align="center">॥ श्री गणेशाय नमः ॥</p>
+        <hr>
+        <h1 align="center">Ticketless Entry System</h1>
+        <hr>
+        
+        <h1>Select City</h1>
+        <form metho="post" action="/selectMonument">
+            {% csrf_token %}
+            <select name="city">
+        {% for monuments in monumentsData%}
+            {% comment %} <input type='radio' name='city' value={{monuments.city}}/>
+            <label>{{monuments.city}}</label><br> {% endcomment %}
+           
+                <option>{{monuments.city}}</option>
+            
+        {% endfor %}
+    </select>
+        <br><br>
+        <input type='submit'/>
+        </form>
+
+    <body>
+</html>
