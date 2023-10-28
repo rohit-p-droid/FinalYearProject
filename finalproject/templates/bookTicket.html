@@ -1,35 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <title>Ticketless Entry System</title>
-    </head>
-    <body align="center">
-        <p align="center">॥ श्री गणेशाय नमः ॥</p>
-        <hr>
-        <h1 align="center">Ticketless Entry System</h1>
-        <hr>
-        
-        <form method="POST" action="/getMonument">
-            {% csrf_token %}
-            <select name="monument">
-                {% for monuments in monumentsData %}
-                        <option>{{monuments.city}}</option>
-                {% endfor %}
-            </select>
-            <input type="submit"/>
-        </form>
-
-        <form method="POST" action="/booking">
-            {% csrf_token %}
-            <select name="mon">
-            {% for monument in cityMonuments %}
-                <option>{{monument.monument}}</option>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Ticket</title>
+</head>
+<body align="center">
+    <p align="center">॥ श्री गणेशाय नमः ॥</p>
+    <hr>
+    <h1 align="center">Ticketless Entry System</h1>
+    <hr>
+    
+    <form method="POST" action="/getMonument">
+        {% csrf_token %}
+        <select name="monument">
+            {% for monuments in monumentsData %}
+                    <option>{{monuments.city}}</option>
             {% endfor %}
-            </select>
-            <br><br>
-            <input type="submit"/>
-        </form>
+        </select>
+        <input type="submit"/>
+    </form>
+
+    <form method="POST" action="/booking">
+        {% csrf_token %}
+        <select name="mon">
+        {% for monument in cityMonuments %}
+            <option>{{monument.monument}}</option>
+        {% endfor %}
+        </select>
+        <br><br>
+        <input type="submit"/>
+    </form>
 
 
-    <body>
+<body>
 </html>

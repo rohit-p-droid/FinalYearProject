@@ -1,23 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <title>Ticketless Entry System</title>
-    </head>
-    <body align="center">
-        <p align="center">॥ श्री गणेशाय नमः ॥</p>
-        <hr>
-        <h1 align="center">Ticketless Entry System</h1>
-        <hr>
-        
-        <h1>Booking Page</h1>
-        <div style="font-size:30px">
-        {% for info in infoMonuments %}
-        <lable style='font-weight:bold'>City: </lable>{{info.city}}<br>
-        <lable style='font-weight:bold'>Monument: </lable>{{info.monument}}<br>
-        <lable style='font-weight:bold'>Indian Ticket Price: </lable>{{info.indPrice}}₹<br>
-        <lable style='font-weight:bold'>Foreigner Ticket Price: </lable>{{info.foreignPrice}}₹<br>
-        {% comment %} <h3>{{infoMonuments.city}}</h3><br> {% endcomment %}
-       {% endfor %}
-        </div>
-    <body>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Ticket</title>
+</head>
+<body align="center">
+    
+    
+    <h1>Booking Page</h1>
+    <div style="font-size:30px">
+    {% for info in infoMonuments %}
+    <lable style='font-weight:bold'>City: </lable>{{info.city}}<br>
+    <lable style='font-weight:bold'>Monument: </lable>{{info.monument}}<br>
+    <lable style='font-weight:bold'>Indian Ticket Price: </lable>{{info.indPrice}}₹<br>
+    <lable style='font-weight:bold'>Foreigner Ticket Price: </lable>{{info.foreignPrice}}₹<br>
+    {% comment %} <h3>{{infoMonuments.city}}</h3><br> {% endcomment %}
+   {% endfor %}
+    </div>
+<body>
 </html>
