@@ -12,15 +12,11 @@
         <h1>Select City</h1>
         <form metho="post" action="/selectMonument">
             {% csrf_token %}
-            <select name="city">
         {% for monuments in monumentsData%}
-            {% comment %} <input type='radio' name='city' value={{monuments.city}}/>
-            <label>{{monuments.city}}</label><br> {% endcomment %}
-           
-                <option>{{monuments.city}}</option>
-            
+        <label>
+            <input type="radio" name={{monuments.city}} value="Mumbai"> {{monuments.city}} 
+        </label> 
         {% endfor %}
-    </select>
         <br><br>
         <input type='submit'/>
         </form>

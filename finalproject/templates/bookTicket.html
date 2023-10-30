@@ -13,7 +13,7 @@
     
     <form method="POST" action="/getMonument">
         {% csrf_token %}
-        <select name="monument">
+        <select name="monument" onchange=updatePlaces()>
             {% for monuments in monumentsData %}
                     <option>{{monuments.city}}</option>
             {% endfor %}
@@ -30,8 +30,7 @@
         </select>
         <br><br>
         <input type="submit"/>
-    </form>
-
+    </form> 
 
 <body>
 </html>

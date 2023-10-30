@@ -13,4 +13,5 @@ urlpatterns = [
     path("selectCity", views.selectCity, name="selectCity"),
     path("selectMonument", views.selectMonument, name="selectMonument"),
     path("booking", views.booking, name="booking"),
+    path("ticketDetail", views.ticketDetail, name="ticketDetail"),
 ]

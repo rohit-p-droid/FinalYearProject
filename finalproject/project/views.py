@@ -3,6 +3,7 @@ from project.models import Monuments
 from django.contrib import messages
 
 # Create your views here.
+
 def index(request):
     messages.success(request, "this is test message")
     return render(request, 'index.html')
@@ -95,6 +96,33 @@ def booking(request):
         'infoMonuments' :infoMonuments
     }
     return render(request, 'booking.html', data)
+
+def ticketDetail(request):
+    if request.method == "POST":
+        global city
+        city = request.POST.get("city")
+        global monument
+        monument = request.POST.get("monument")
+        global count
+        count = request.POST.get("count")
+        global citizen
+        citizen = request.POST.get("citizen")
+        global date
+        date = request.POST.get("date")
+        global time
+        time = request.POST.get("time")
+        # price = int(citizen) * int(count)
+        payment()
+        return render(request, "payment.html")
+    
+def payment():
+    print(city)
+    print(monument)
+    print(count)
+    print(citizen)
+    print(time)
+    print(date)
+    
 
 
 
