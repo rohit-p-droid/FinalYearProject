@@ -99,10 +99,8 @@ def booking(request):
 
 def ticketDetail(request):
     if request.method == "POST":
-        global city
-        city = request.POST.get("city")
-        global monument
-        monument = request.POST.get("monument")
+        global id
+        id = request.POST.get("id")
         global count
         count = request.POST.get("count")
         global citizen
@@ -116,8 +114,8 @@ def ticketDetail(request):
         return render(request, "payment.html")
     
 def payment():
-    print(city)
-    print(monument)
+    monId = id[:-1]
+    print(monId)
     print(count)
     print(citizen)
     print(time)

@@ -2,6 +2,7 @@ from django.db import models
 
 # Create your models here.
 class Monuments(models.Model):
+    id = models.IntegerField(auto_created=True, unique=True, primary_key=True)
     city = models.CharField(max_length=122)
     monument = models.CharField(max_length=122)
     indPrice = models.CharField(max_length=10)
@@ -9,10 +10,7 @@ class Monuments(models.Model):
     
 class Ticket(models.Model):
     id = models.CharField(max_length=20, primary_key=True, auto_created=True)
-    city = models.CharField(max_length=122)
-    monument = models.CharField(max_length=122)
-    ticketCount = models.IntegerField()
-    ticketPrice = models.CharField(max_length=10)
+    monumentId = models.CharField(max_length=10, null=True)
     totalPrice = models.CharField(max_length=10)
     time = models.CharField(max_length=20)
     date = models.DateField()

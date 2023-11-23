@@ -23,13 +23,12 @@
     <hr/>
     <form action="/ticketDetail" method="post">
         {% csrf_token %}
-        <input type="hidden" name="monument" value={{info.monument}}/>
-        <input type="hidden" name="city" value={{info.city}}/>
+        <input type="hidden" name="id" value={{info.id}}/>
         <label>Ticket Count : </label>
         <input style="font-size:30px" type="number" min="1" max="10" name="count"/><br><br>
         <label>Type of Citizen : </label>
-        <input type="radio" name="citizen" value={{info.indPrice}}/> Indian
-        <input type="radio" name="citizen" value={{info.foreignPrice}}/>Foreigner <br><br>
+        <input type="radio" name="citizen" value="Indian"/> Indian
+        <input type="radio" name="citizen" value="Foreigner"/>Foreigner <br><br>
         <label>Date : </label>
         <input style="font-size:30px" type="date" name="date"/><br><br>
         <label>Time : </label>
