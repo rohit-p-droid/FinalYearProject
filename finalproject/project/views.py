@@ -1,6 +1,8 @@
 from django.shortcuts import render, HttpResponse
 from project.models import Monuments
 from django.contrib import messages
+import razorpay
+from django.conf import settings
 
 # Create your views here.
 
@@ -109,9 +111,18 @@ def ticketDetail(request):
         date = request.POST.get("date")
         global time
         time = request.POST.get("time")
-        # price = int(citizen) * int(count)
-        payment()
-        return render(request, "payment.html")
+        citizen = citizen[:-1]
+        price = int(citizen) * int(count)
+        
+        
+        client = razorpay.Client(auth = (settings.KEY, settings.SECRET))
+        payment = client.order.create({'amount': price*100, 'currency': 'INR', 'payment_capture': 1})
+        paymentData = {
+            'money':price,
+            'payment': payment
+        }
+        print(payment)
+        return render(request, "payment.html", paymentData)
     
 def payment():
     monId = id[:-1]
@@ -120,6 +131,10 @@ def payment():
     print(citizen)
     print(time)
     print(date)
+
+    
+
+
     
 
 

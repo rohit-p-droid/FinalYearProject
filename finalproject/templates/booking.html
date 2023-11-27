@@ -27,14 +27,18 @@
         <label>Ticket Count : </label>
         <input style="font-size:30px" type="number" min="1" max="10" name="count"/><br><br>
         <label>Type of Citizen : </label>
-        <input type="radio" name="citizen" value="Indian"/> Indian
-        <input type="radio" name="citizen" value="Foreigner"/>Foreigner <br><br>
+        <input type="radio" name="citizen" value={{info.indPrice}}/> Indian
+        <input type="radio" name="citizen" value={{info.foreignPrice}}/>Foreigner <br><br>
         <label>Date : </label>
         <input style="font-size:30px" type="date" name="date"/><br><br>
         <label>Time : </label>
         <input type="radio" name="time" value="morning"/> Morning
         <input type="radio" name="time" value="afternoon"/> afternoon   <br><br>
         <input style="font-size:30px" type="submit"/>
+
+
+        
+
     </form>
 
     {% endfor %}

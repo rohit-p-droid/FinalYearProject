@@ -128,3 +128,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static")
 ]
+
+KEY = "rzp_test_XHyKo58FNKTPjW"
+SECRET = "0AucNFZPpvz3BN4zvxuMEYZH"
