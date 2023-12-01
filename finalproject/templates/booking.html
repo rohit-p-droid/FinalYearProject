@@ -24,6 +24,8 @@
     <form action="/ticketDetail" method="post">
         {% csrf_token %}
         <input type="hidden" name="id" value={{info.id}}/>
+        <label>Email : </label>
+        <input style="font-size:30px" type="email" name="email"/><br><br>
         <label>Ticket Count : </label>
         <input style="font-size:30px" type="number" min="1" max="10" name="count"/><br><br>
         <label>Type of Citizen : </label>

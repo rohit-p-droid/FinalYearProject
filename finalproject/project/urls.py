@@ -14,4 +14,5 @@ urlpatterns = [
     path("selectMonument", views.selectMonument, name="selectMonument"),
     path("booking", views.booking, name="booking"),
     path("ticketDetail", views.ticketDetail, name="ticketDetail"),
+    path("payment", views.payment, name="payment"),
 ]
