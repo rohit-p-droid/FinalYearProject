@@ -13,3 +13,7 @@ git pull
 #pip installs goes here
 > pip install Django
 > 
+
+#Gmail
+ticketlessentrysystem@gmail.com
+Ticket@2023

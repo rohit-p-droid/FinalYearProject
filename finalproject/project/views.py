@@ -3,6 +3,21 @@ from django.contrib import messages
 import razorpay
 from django.conf import settings
 from project.models import Monuments
+from project.models import Tikect
+from django.core.mail import send_mail
+
+from django.core.mail import EmailMessage
+from django.http import HttpResponse
+from io import BytesIO
+import qrcode
+
+import cv2
+from pyzbar.pyzbar import decode
+import time
+
+# from email.mime.multipart import MIMEMultipart
+# from email.mime.text import MIMEText
+# from email.mime.image import MIMEImage
 
 # Create your views here.
 
@@ -135,20 +150,102 @@ def ticketDetail(request):
 def payment(request):
     order_id = request.GET.get('order_id')
 
-    # ticket = Ticket(id=1, monumentId=id, totalPrice=totalPrice, time=time, date=date, transactionId=order_id, email=email)
-    # ticket.save()
+    ticket = Tikect(email=email, monumentId=id, count=count, price=citizen, date=date, shift=time, trasactionId=order_id)
+    ticket.save()
 
-    print(order_id)
-    info = {
-        'email':email,
-        'monId':id,
-        'count':count,
-        'citizen':citizen,
-        'date':date,
-        'time':time
-    }
-    print(info)
-    return HttpResponse("Payment Success")
+    mail = email
+
+    qr = order_id + id
+    qr_img = qrcode.make(qr)
+    img_buffer = BytesIO()
+    qr_img.save(img_buffer)
+    img_buffer.seek(0)
+    gmail = EmailMessage(
+        subject = 'Your Ticket is here',
+        body = 'Here is your ticket for unintrupeted entry please find below attachment',
+        from_email = 'ticketlessentrysystem@gmail.com',
+        to = [mail],
+    )
+    gmail.attach('Ticket.png', img_buffer.getvalue(), 'image/png')
+
+    try:
+        gmail.send()
+        return render(request, "success.html")
+    except Exception as e:
+        return HttpResponse(f'Failed: {e}')
+
+def success(request):
+    return render(request, 'success.html')
+    # print(order_id)
+    # info = {
+    #     'email':email,
+    #     'monId':id,
+    #     'count':count,
+    #     'citizen':citizen,
+    #     'date':date,
+    #     'time':time
+    # }
+    # print(info)
+    # return HttpResponse("Payment Success")
+
+
+# def email(request):
+#     if request.method == 'POST':
+#         # subject = "This is test email"
+#         # body = "Thi is test message"
+#         # from_mail = settings.EMAIL_HOST_USER
+#         # recipient_list = ["p.rohit.2310@gmail.com"]
+#         # image = qrcode.make('order_N7BUExHD3OIAIl') 
+#         # send_mail(subject, msg, from_mail, recipient_list)
+
+#         qr_img = qrcode.make('order_N7BUExHD3OIAIl')
+#         img_buffer = BytesIO()
+#         qr_img.save(img_buffer)
+#         img_buffer.seek(0)
+#         email = EmailMessage(
+#             subject = 'Test Subject for Ticketless Entry System',
+#             body = 'This is test email with QR COde',
+#             from_email = 'ticketlessentrysystem@gmail.com',
+#             to = ['p.rohit.2310@gmail.com'],
+#         )
+#         email.attach('qr_code.png', img_buffer.getvalue(), 'image/png')
+
+#         try:
+#             email.send()
+#             return HttpResponse("Success")
+#         except Exception as e:
+#             return HttpResponse(f'Failed: {e}')
+
+#     return render(request, 'email.html')
+
+
+def verify(request):
+    ticketData = Tikect.objects.all()
+    cam = cv2.VideoCapture(0)
+    cam.set(0, 640)
+    cam.set(0, 480)
+
+    camera = True
+    code = ""
+    while camera == True:
+        success, frame = cam.read()
+
+        for i in decode(frame):
+            # print(i.type)
+            code = i.data.decode('utf-8')
+            time.sleep(6)
+
+            #cv2.imshow("OurQr_Code_Scanner", fram+e)
+            cv2.waitKey(3)
+            print("success = ", code)
+            info = {
+                'qrcode':code,
+                'ticketData':ticketData
+            }
+            camera = False
+            return render(request, 'verify.html', info)
+
+        # return render(request, 'verify.html')
 
     
 

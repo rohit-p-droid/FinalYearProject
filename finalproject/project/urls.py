@@ -15,4 +15,7 @@ urlpatterns = [
     path("booking", views.booking, name="booking"),
     path("ticketDetail", views.ticketDetail, name="ticketDetail"),
     path("payment", views.payment, name="payment"),
+    # path("email", views.email, name="email"),
+    path("success", views.success, name="success"),
+    path("verify", views.verify, name="verify"),
 ]
