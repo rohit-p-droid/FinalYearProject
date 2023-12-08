@@ -233,7 +233,7 @@ def verify(request):
         for i in decode(frame):
             # print(i.type)
             code = i.data.decode('utf-8')
-            time.sleep(6)
+            time.sleep(6)   
 
             #cv2.imshow("OurQr_Code_Scanner", fram+e)
             cv2.waitKey(3)
