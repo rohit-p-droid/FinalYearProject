@@ -233,16 +233,16 @@ def verify(request):
         for i in decode(frame):
             # print(i.type)
             code = i.data.decode('utf-8')
-            time.sleep(6)   
+            time.sleep(2)   
 
             #cv2.imshow("OurQr_Code_Scanner", fram+e)
             cv2.waitKey(3)
             print("success = ", code)
+            camera = False
             info = {
                 'qrcode':code,
                 'ticketData':ticketData
             }
-            camera = False
             return render(request, 'verify.html', info)
 
         # return render(request, 'verify.html')

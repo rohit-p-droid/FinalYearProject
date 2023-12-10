@@ -4,20 +4,60 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Book Ticket</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+
 </head>
-<body align="center">
-    <p align="center">॥ श्री गणेशाय नमः ॥</p>
-    <hr>
-    <h1 align="center">Ticketless Entry System</h1>
-    <hr>
-    
-    <h1>Payments</h1>
+<body>
+    <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
+
+        <div class="container-fluid ">
+          <a class="navbar-brand" href="#">E-Tickets</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="bookTicket">Book Ticket</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Regenerate Ticket</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="adminLogin">Admin Login</a>
+              </li>
+              
+              
+            </ul>
+            {% comment %} <form class="d-flex" role="search">
+              <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+              <button class="btn btn-outline-success" type="submit">Search</button>
+            </form> {% endcomment %}
+          </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid" style="margin-top: 100px"> 
+     <div class="col d-flex justify-content-center"> 
+        <div class="card" style="width: 18rem;">
+            <img src="https://plus.unsplash.com/premium_photo-1682511145862-3cb4edc53aeb?q=80&w=1984&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" class="card-img-top" alt="...">
+            <div class="card-body">
+              <h5 class="card-title">Payments</h5>
+              <p class="card-text">Amout to Pay: {{money}}</p>
+              <button class="btn btn-dark" id="rzp-button1">Pay with Razorpay</button>
+            </div>
+          </div>
+
+    {% comment %} <h1>Payments</h1>
 
     <br><br>
 
     <h2>Amout to Pay: {{money}}</h2>
 
-    <button id="rzp-button1">Pay with Razorpay</button>
+    <button id="rzp-button1">Pay with Razorpay</button> {% endcomment %}
+
+    </div>
+    </div>
     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
     <script>
     var options = {

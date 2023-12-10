@@ -4,33 +4,104 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Book Ticket</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+
 </head>
-<body align="center">
-    <p align="center">॥ श्री गणेशाय नमः ॥</p>
-    <hr>
-    <h1 align="center">Ticketless Entry System</h1>
-    <hr>
+<body>
+
+    <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
+
+        <div class="container-fluid ">
+          <a class="navbar-brand" href="#">E-Tickets</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="/">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Regenerate Ticket</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="adminLogin">Admin Login</a>
+              </li>
+              
+              
+            </ul>
+            {% comment %} <form class="d-flex" role="search">
+              <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+              <button class="btn btn-outline-success" type="submit">Search</button>
+            </form> {% endcomment %}
+          </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid" style="margin-top: 100px"> 
+
+    {% comment %} <form method="POST" action="/booking" id="cityMonumentsForm">
+        {% csrf_token %}
+        <select class="form-select" aria-label="Default select example" name="city" onchange="updateMonuments()">
+            {% for city in cities %}
+                <option value="{{ city }}">{{ city }}</option>
+            {% endfor %}
+        </select>
+        <select class="mt-1 form-select" aria-label="Default select example" name="monument" id="monumentsDropdown">
+            <!-- Options for monuments will be populated dynamically based on selected city -->
+        </select>
+        <br><br>
+        <button type="submit" class="btn btn-dark mt-1">Submit</button>
+    </form>
+    
+    <script>
+        function updateMonuments() {
+            var selectedCity = document.querySelector('select[name="city"]').value;
+            fetch(`/getMonuments?city=${selectedCity}`)
+                .then(response => response.json())
+                .then(data => {
+                    var monumentsDropdown = document.getElementById('monumentsDropdown');
+                    monumentsDropdown.innerHTML = ''; // Clear previous options
+                    data.forEach(monument => {
+                        var option = document.createElement('option');
+                        option.value = monument.id; // Set the value as needed
+                        option.textContent = monument.name; // Set the display text
+                        monumentsDropdown.appendChild(option);
+                    });
+                })
+                .catch(error => console.error('Error:', error));
+        }
+    
+        // Initially populate monuments on page load (if needed)
+        updateMonuments();
+    </script> {% endcomment %}
+    
     
     <form method="POST" action="/getMonument">
         {% csrf_token %}
-        <select name="monument" onchange=updatePlaces()>
+        <select class="form-select" aria-label="Default select example" name="monument" onchange=updatePlaces()>
             {% for monuments in monumentsData %}
                     <option>{{monuments.city}}</option>
             {% endfor %}
         </select>
-        <input type="submit"/>
+        <div class="text-center">
+            <button type="submit" class="btn btn-dark mt-1">Submit</button>
+        </div>
+        
     </form>
 
     <form method="POST" action="/booking">
         {% csrf_token %}
-        <select name="mon">
+        <select class="mt-1 form-select" aria-label="Default select example" name="mon">
         {% for monument in cityMonuments %}
             <option>{{monument.monument}}</option>
         {% endfor %}
         </select>
         <br><br>
-        <input type="submit"/>
-    </form> 
-
+        <div class="text-center">
+          <button type="submit" class="btn btn-dark mt-1">Submit</button>
+        </div>
+    </form>  
+</div>
 <body>
 </html>
