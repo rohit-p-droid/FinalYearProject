@@ -45,9 +45,9 @@ def addMonument(request):
     if request.method == "POST":
         city = request.POST.get('city')
         monument = request.POST.get('monument')
-        indPrice = request.POST.get('indprice')
-        foreignPrice = request.POST.get('foreignprice')
-        monuments = Monuments(city=city, monument=monument, indPrice=indPrice, foreignPrice=foreignPrice)
+        price = request.POST.get('price')
+        image = request.POST.get('image')
+        monuments = Monuments(city=city, monument=monument, price=price, image=image)
         monuments.save()
         #messages.success(request, 'Monument added successfully!!')
 
@@ -61,7 +61,7 @@ def viewMonuments(request):
     return render(request, 'viewMonuments.html', data)
 
 def bookTicket(request):
-    monumentsData = Monuments.objects.all()
+    monumentsData = Monuments.objects.values('city').distinct()
     data = {
         'monumentsData' :monumentsData
     }
@@ -78,31 +78,24 @@ def getMonument(request):
 
     return render(request, 'bookTicket.html', data)
 
-def selectCity(request):
-    monumentsData = Monuments.objects.all()
-    data = {
-        'monumentsData' :monumentsData
-    }
-    # if request.method == "POST":
-    #     city = request.POST.get('city')
-    #     cityMonuments = Monuments.objects.filter(city='chopda').values()
-    #     data = {
-    #         cityMonuments: 'cityMonuments'
-    #     }
-    #     return render(request, 'selectMonument.html', data)
+# def selectCity(request):
+#     monumentsData = Monuments.objects.all()
+#     data = {
+#         'monumentsData' :monumentsData
+#     }
 
-    return render(request, 'selectCity.html', data)
+#     return render(request, 'selectCity.html', data)
 
-def selectMonument(request):
-    if request.method == "POST":
-        city = request.POST.get("city")
+# def selectMonument(request):
+#     if request.method == "POST":
+#         city = request.POST.get("city")
        
-    cityMonuments = Monuments.objects.filter(city=city).values()
-    data = {
-        'cityMonuments' :cityMonuments
-    }
+#     cityMonuments = Monuments.objects.filter(city=city).values()
+#     data = {
+#         'cityMonuments' :cityMonuments
+#     }
 
-    return render(request, 'selectMonument.html', data) 
+#     return render(request, 'selectMonument.html', data) 
 
 
 def booking(request):
@@ -126,18 +119,20 @@ def ticketDetail(request):
             id = id[:-1]
         global count
         count = request.POST.get("count")
-        global citizen
-        citizen = request.POST.get("citizen")
+        global price
+        price = request.POST.get("price")
+        global gender
+        gender = request.POST.get("gender")
         global date
         date = request.POST.get("date")
-        global time
-        time = request.POST.get("time")
+        global shift
+        shift = request.POST.get("time")
 
-        if citizen.isnumeric():
-            price = int(citizen) * int(count)
+        if price.isnumeric():
+            price = int(price) * int(count)
         else:
-            citizen = citizen[:-1]
-            price = int(citizen) * int(count)
+            price = price[:-1]
+            price = int(price) * int(count)
         
         client = razorpay.Client(auth = (settings.KEY, settings.SECRET))
         payment = client.order.create({'amount': price*100, 'currency': 'INR', 'payment_capture': 1})
@@ -150,7 +145,7 @@ def ticketDetail(request):
 def payment(request):
     order_id = request.GET.get('order_id')
 
-    ticket = Tikect(email=email, monumentId=id, count=count, price=citizen, date=date, shift=time, trasactionId=order_id)
+    ticket = Tikect(email=email, monumentId=id, count=count, price=price, date=date, shift=shift, trasactionId=order_id, gender=gender)
     ticket.save()
 
     mail = email
@@ -176,47 +171,6 @@ def payment(request):
 
 def success(request):
     return render(request, 'success.html')
-    # print(order_id)
-    # info = {
-    #     'email':email,
-    #     'monId':id,
-    #     'count':count,
-    #     'citizen':citizen,
-    #     'date':date,
-    #     'time':time
-    # }
-    # print(info)
-    # return HttpResponse("Payment Success")
-
-
-# def email(request):
-#     if request.method == 'POST':
-#         # subject = "This is test email"
-#         # body = "Thi is test message"
-#         # from_mail = settings.EMAIL_HOST_USER
-#         # recipient_list = ["p.rohit.2310@gmail.com"]
-#         # image = qrcode.make('order_N7BUExHD3OIAIl') 
-#         # send_mail(subject, msg, from_mail, recipient_list)
-
-#         qr_img = qrcode.make('order_N7BUExHD3OIAIl')
-#         img_buffer = BytesIO()
-#         qr_img.save(img_buffer)
-#         img_buffer.seek(0)
-#         email = EmailMessage(
-#             subject = 'Test Subject for Ticketless Entry System',
-#             body = 'This is test email with QR COde',
-#             from_email = 'ticketlessentrysystem@gmail.com',
-#             to = ['p.rohit.2310@gmail.com'],
-#         )
-#         email.attach('qr_code.png', img_buffer.getvalue(), 'image/png')
-
-#         try:
-#             email.send()
-#             return HttpResponse("Success")
-#         except Exception as e:
-#             return HttpResponse(f'Failed: {e}')
-
-#     return render(request, 'email.html')
 
 
 def verify(request):
@@ -239,13 +193,59 @@ def verify(request):
             cv2.waitKey(3)
             print("success = ", code)
             camera = False
-            info = {
-                'qrcode':code,
-                'ticketData':ticketData
-            }
-            return render(request, 'verify.html', info)
+        
+            for ticket in ticketData:
+                print("Code=",code)
+                print("get=", ticket.trasactionId + str(ticket.monumentId))
+                if code == (ticket.trasactionId + str(ticket.monumentId)) and ticket.scanned == False:
+                    ticket.scanned = True
+                    ticket.save()
+                    ticketsData = {
+                        'Tickets':ticket
+                    }
+                    return render(request, "entrySuccess.html", ticketsData)
+
+            return render(request, "entryFailed.html")
 
         # return render(request, 'verify.html')
+
+def regenerateTicket(request):
+    if request.method == "POST":
+        email = request.POST.get("email")
+        transactionId = request.POST.get("transactionId")
+        tickets = Tikect.objects.all()
+        for ticket in tickets:
+            if ticket.email == email and ticket.trasactionId == transactionId and ticket.scanned == False:
+                qr = transactionId + str(ticket.monumentId)
+                qr_img = qrcode.make(qr)
+                img_buffer = BytesIO()
+                qr_img.save(img_buffer)
+                img_buffer.seek(0)
+                gmail = EmailMessage(
+                    subject = 'Your Ticket is here',
+                    body = 'Here is your ticket for unintrupeted entry please find below attachment',
+                    from_email = 'ticketlessentrysystem@gmail.com',
+                    to = [email],
+                )
+                gmail.attach('Ticket.png', img_buffer.getvalue(), 'image/png')
+
+                try:
+                    gmail.send()
+                    return render(request, "success.html")
+                except Exception as e:
+                    return HttpResponse(f'Failed: {e}')
+
+    return render(request, "regenerateTicket.html")
+    
+def viewTicket(request):
+    tickets = Tikect.objects.all()
+    ticketsData = {
+        'Tickets':tickets
+    }
+    return render(request, 'viewTickets.html', ticketsData)
+
+def crowd(request):
+    return render(request, 'crowd.html')
 
     
 

@@ -9,72 +9,35 @@
 </head>
 <body>
 
-    <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
+  <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
 
-        <div class="container-fluid ">
-          <a class="navbar-brand" href="#">E-Tickets</a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="/">Home</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Regenerate Ticket</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="adminLogin">Admin Login</a>
-              </li>
-              
-              
-            </ul>
-            {% comment %} <form class="d-flex" role="search">
-              <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-              <button class="btn btn-outline-success" type="submit">Search</button>
-            </form> {% endcomment %}
-          </div>
-        </div>
-    </nav>
+    <div class="container-fluid ">
+      <a class="navbar-brand" href="/">E-Tickets</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="bookTicket">Book Ticket</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="regenerateTicket">Regenerate Ticket</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="adminLogin">Admin Login</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="crowd">Show Crowd</a>
+          </li>
+          
+          
+        </ul>
+      </div>
+    </div>
+</nav>
 
     <div class="container-fluid" style="margin-top: 100px"> 
-
-    {% comment %} <form method="POST" action="/booking" id="cityMonumentsForm">
-        {% csrf_token %}
-        <select class="form-select" aria-label="Default select example" name="city" onchange="updateMonuments()">
-            {% for city in cities %}
-                <option value="{{ city }}">{{ city }}</option>
-            {% endfor %}
-        </select>
-        <select class="mt-1 form-select" aria-label="Default select example" name="monument" id="monumentsDropdown">
-            <!-- Options for monuments will be populated dynamically based on selected city -->
-        </select>
-        <br><br>
-        <button type="submit" class="btn btn-dark mt-1">Submit</button>
-    </form>
-    
-    <script>
-        function updateMonuments() {
-            var selectedCity = document.querySelector('select[name="city"]').value;
-            fetch(`/getMonuments?city=${selectedCity}`)
-                .then(response => response.json())
-                .then(data => {
-                    var monumentsDropdown = document.getElementById('monumentsDropdown');
-                    monumentsDropdown.innerHTML = ''; // Clear previous options
-                    data.forEach(monument => {
-                        var option = document.createElement('option');
-                        option.value = monument.id; // Set the value as needed
-                        option.textContent = monument.name; // Set the display text
-                        monumentsDropdown.appendChild(option);
-                    });
-                })
-                .catch(error => console.error('Error:', error));
-        }
-    
-        // Initially populate monuments on page load (if needed)
-        updateMonuments();
-    </script> {% endcomment %}
     
     
     <form method="POST" action="/getMonument">
