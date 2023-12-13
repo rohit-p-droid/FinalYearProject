@@ -20,5 +20,8 @@ urlpatterns = [
     path("regenerateTicket", views.regenerateTicket, name="regenerateTicket"), 
     path("crowd", views.crowd, name="crowd"),
     path("viewTicket", views.viewTicket, name="viewTicket"),
+    path("selectMonument", views.selectMon, name="selectMonument"),
+    path("getCity", views.getCity, name="getCity"),
+    
 
 ]

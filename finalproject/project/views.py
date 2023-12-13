@@ -10,6 +10,10 @@ from django.core.mail import EmailMessage
 from django.http import HttpResponse
 from io import BytesIO
 import qrcode
+import matplotlib.pyplot as plt
+plt.switch_backend('Agg')
+import base64
+from datetime import datetime
 
 import cv2
 from pyzbar.pyzbar import decode
@@ -77,25 +81,6 @@ def getMonument(request):
     }
 
     return render(request, 'bookTicket.html', data)
-
-# def selectCity(request):
-#     monumentsData = Monuments.objects.all()
-#     data = {
-#         'monumentsData' :monumentsData
-#     }
-
-#     return render(request, 'selectCity.html', data)
-
-# def selectMonument(request):
-#     if request.method == "POST":
-#         city = request.POST.get("city")
-       
-#     cityMonuments = Monuments.objects.filter(city=city).values()
-#     data = {
-#         'cityMonuments' :cityMonuments
-#     }
-
-#     return render(request, 'selectMonument.html', data) 
 
 
 def booking(request):
@@ -195,8 +180,8 @@ def verify(request):
             camera = False
         
             for ticket in ticketData:
-                print("Code=",code)
-                print("get=", ticket.trasactionId + str(ticket.monumentId))
+                # print("Code=",code)
+                # print("get=", ticket.trasactionId + str(ticket.monumentId))
                 if code == (ticket.trasactionId + str(ticket.monumentId)) and ticket.scanned == False:
                     ticket.scanned = True
                     ticket.save()
@@ -244,10 +229,90 @@ def viewTicket(request):
     }
     return render(request, 'viewTickets.html', ticketsData)
 
+def getCity(request):
+    if request.method == "POST":
+        city = request.POST.get("monument")
+    cityMonuments = Monuments.objects.filter(city=city).values()
+    #  mydata = Member.objects.filter(firstname='Emil').values()
+    data = {
+        'cityMonuments' :cityMonuments
+    }
+
+    return render(request, 'selectMonument.html', data)
+
+def selectMon(request):
+    monumentsData = Monuments.objects.values('city').distinct()
+    data = {
+        'monumentsData' :monumentsData
+    }
+    return render(request, 'selectMonument.html', data)
+
+
 def crowd(request):
-    return render(request, 'crowd.html')
+    global monument
+    if request.method == "POST":
+        monument = request.POST.get("mon")
+
+    mon = Monuments.objects.filter(monument=monument).values()
+    for monum in mon:
+        monId = monum['id']
+
+    tickets = Tikect.objects.filter(monumentId=monId,scanned=False).values()
+    months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+    ticketCount = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+
+    count = 0
+    for ticket in tickets:
+        count = count + int(ticket['count'])
+        date = ticket['date']
+        month = date.month
+        ticketCount[month-1] = ticketCount[month-1] + ticket['count']
 
     
+    plt.figure(figsize=(8, 6))
+    montwisePlot(months, ticketCount)
+    growthwise(count)
+    image_stream = BytesIO()
+    plt.savefig(image_stream, format='png')
+    
+    image_base64 = base64.b64encode(image_stream.getvalue()).decode('utf-8')
+    # plt.bar(months, ticketCount)
+    # plt.xlabel('Months')
+    # plt.ylabel('Ticket Count')
+    # plt.title('Ticket Population for Monument Monthwise')
+
+    # image_stream = BytesIO()
+    # plt.savefig(image_stream, format='png')
+    # plt.close()
+    # monthwise = base64.b64encode(image_stream.getvalue()).decode('utf-8')
+
+    # plt.plot(count)
+    # plt.ylabel('Number of Tickets')
+    # plt.title('Growth of Population For Visiting Site')
+    # plt.savefig(image_stream, format='png')
+    # growthwise = base64.b64encode(image_stream.getvalue()).decode('utf-8')
+    # plt.close()
+    context = {
+        'image_base64': image_base64,
+    }
+
+
+    return render(request, 'crowd.html', context)
+
+
+def montwisePlot(months, ticketCount):
+    plt.bar(months, ticketCount)
+    plt.xlabel('Months')
+    plt.ylabel('Ticket Count')
+    plt.title('Ticket Population for Monument Monthwise')
+    plt.legend()
+
+def growthwise(count):
+    plt.plot(count)
+    plt.ylabel('Number of Tickets')
+    plt.title('Growth of Population For Visiting Site')
+    plt.legend()
+
 
 
     

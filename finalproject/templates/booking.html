@@ -32,7 +32,7 @@
             <a class="nav-link" href="adminLogin">Admin Login</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="crowd">Show Crowd</a>
+            <a class="nav-link" href="selectMonument">Show Crowd</a>
           </li>
           
           
@@ -119,45 +119,5 @@
             
     </form>
     {% endfor %}
-    {% comment %} <h1>Booking Page</h1>
-    <div style="font-size:30px">
-
-    
-    <lable style='font-weight:bold'>City: </lable>{{info.city}}<br>
-    <lable style='font-weight:bold'>Monument: </lable>{{info.monument}}<br>
-    <lable style='font-weight:bold'>Indian Ticket Price: </lable>{{info.indPrice}}₹<br>
-    <lable style='font-weight:bold'>Foreigner Ticket Price: </lable>{{info.foreignPrice}}₹<br> {% endcomment %}
-    {% comment %} <h3>{{infoMonuments.city}}</h3><br> {% endcomment %}
-    
-
-    {% comment %} <br><br><br>
-    <hr/>
-    <form action="/ticketDetail" method="post">
-        {% csrf_token %}
-        <input type="hidden" name="id" value={{info.id}}/>
-        <label>Email : </label>
-        <input style="font-size:30px" type="email" name="email"/><br><br>
-        <label>Ticket Count : </label>
-        <input style="font-size:30px" type="number" min="1" max="10" name="count"/><br><br>
-        <label>Type of Citizen : </label>
-        <input type="radio" name="citizen" value={{info.indPrice}}/> Indian
-        <input type="radio" name="citizen" value={{info.foreignPrice}}/>Foreigner <br><br>
-        <label>Date : </label>
-        <input style="font-size:30px" type="date" name="date"/><br><br>
-        <label>Time : </label>
-        <input type="radio" name="time" value="morning"/> Morning
-        <input type="radio" name="time" value="afternoon"/> afternoon   <br><br>
-        <input style="font-size:30px" type="submit"/>
-
-
-        
-
-    </form>
-
-   
-    
-</div>
-   
-    </div> {% endcomment %}
 <body>
 </html>

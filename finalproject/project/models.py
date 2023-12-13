@@ -20,3 +20,4 @@ class Tikect(models.Model):
     scanned = models.BooleanField(default=False)
     gender = models.CharField(max_length=20, null=True)
 
+
