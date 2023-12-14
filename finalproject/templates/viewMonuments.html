@@ -48,6 +48,7 @@
         <table class="table table-responsive table-bordered border-dark table-hover text-center text-capitalize">
             <thead>
               <tr class="table-dark table-active text-uppercase text-white">
+                <th>Id</th>
                 <th>City</th>
                 <th>Monument</th>
                 <th>Ticket Price</th>
@@ -56,6 +57,7 @@
             <tbody>
                 {% for monuments in monumentsData %}
                 <tr>
+                    <td>{{monuments.id}}</td>
                     <td>{{monuments.city}}</td>
                     <td>{{monuments.monument}}</td>
                     <td>{{monuments.price}}</td>
