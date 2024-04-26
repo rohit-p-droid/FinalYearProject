@@ -16,4 +16,3 @@ git pull
 
 #Gmail
 ticketlessentrysystem@gmail.com
-Ticket@2023
